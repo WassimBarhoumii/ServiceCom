@@ -295,39 +295,49 @@ class AccountController extends Controller
         ];
         $validator = Validator::make($request->all(),$rules);
 
-        if ($validator->passes()) {
-            $service = Service::find($id);
-            $service->title = $request->title;
-            $service->category_id = $request->category;
-            $service->service_type_id = $request->serviceType;
-            $service->user_id = Auth::user()->id;
-            $service->vacancy = $request->vacancy;
-            $service->salary = $request->salary;
-            $service->location = $request->location;
-            $service->description = $request->description;
-            $service->benefits = $request->benefits;
-            $service->responsibility = $request->responsibility;
-            $service->qualifications = $request->qualifications;
-            $service->keywords = $request->keywords;
-            $service->experience = $request->experience;
-            $service->company_name = $request->company_name;
-            $service->company_location = $request->company_location;
-            $service->website = $request->website;
-            $service->save();
-            
-            session()->flash('success', 'Service updated successfully.');
-
-            return response()->json([
-                'status' => true,
-                'errors' => []
-            ]);
-
-        } else {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator ->errors()
-            ]);
-        }
+        if ($validator->passes()) {  
+            // Add ownership validation before updating  
+            $service = Service::where([  
+                'user_id' => Auth::user()->id,  
+                'id' => $id  
+            ])->first();  
+              
+            if ($service == null) {  
+                abort(404);  
+            }  
+              
+            // Now update the service (remove the Service::find($id) line)  
+            $service->title = $request->title;  
+            $service->category_id = $request->category;  
+            $service->service_type_id = $request->serviceType;  
+            $service->user_id = Auth::user()->id;  
+            $service->vacancy = $request->vacancy;  
+            $service->salary = $request->salary;  
+            $service->location = $request->location;  
+            $service->description = $request->description;  
+            $service->benefits = $request->benefits;  
+            $service->responsibility = $request->responsibility;  
+            $service->qualifications = $request->qualifications;  
+            $service->keywords = $request->keywords;  
+            $service->experience = $request->experience;  
+            $service->company_name = $request->company_name;  
+            $service->company_location = $request->company_location;  
+            $service->website = $request->website;  
+            $service->save();  
+              
+            session()->flash('success', 'Service updated successfully.');  
+      
+            return response()->json([  
+                'status' => true,  
+                'errors' => []  
+            ]);  
+      
+        } else {  
+            return response()->json([  
+                'status' => false,  
+                'errors' => $validator->errors()  
+            ]);  
+        }  
     }
 
     public function deleteService(Request $request) {
