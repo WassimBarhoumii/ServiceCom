@@ -47,7 +47,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label for="" class="mb-2">Service Type<span class="req">*</span></label>
-                                    <select name="serviceType" id="serviceType" class="form-select">
+                                    <select name="serviceType" id="serviceType" class="form-control">
                                         <option value="">Select Service Type</option>
                                         @if ($serviceTypes->isNotEmpty())
                                             @foreach ($serviceTypes as $serviceType)

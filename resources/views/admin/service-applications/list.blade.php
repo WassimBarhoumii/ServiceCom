@@ -8,7 +8,7 @@
                 <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route("admin.dashboard") }}">Home</a></li>
-                        <li class="breadcrumb-item active">Services</li>
+                        <li class="breadcrumb-item active">Service Applications</li>
                     </ol>
                 </nav>
             </div>
@@ -58,7 +58,10 @@
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" onclick="deleteServiceApplication({{ $application->id }})" href="javascript:void(0);><i class="fa fa-trash aria-hidden="true"></i> Delete</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item" onclick="deleteServiceApplication({{ $application->id }})" href="javascript:void(0)";>
+                                                                <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                                                            </a></li>
                                                     </ul>
                                                 </div>
                                             </td>

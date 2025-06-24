@@ -10,7 +10,12 @@ class HomeController extends Controller
 {
     public function index() {
 
-        $categories = Category::where('status',1)->orderBy('name','ASC')->take(8)->get();
+        $categories = Category::where('status',1)->withCount(['services' => function($query) {  
+                                                        $query->where('status', 1);  
+                                                    }])
+                                                ->orderBy('name','ASC')
+                                                ->take(8)
+                                                ->get();
 
         $newCategories = Category::where('status',1)->orderBy('name','ASC')->get();
 

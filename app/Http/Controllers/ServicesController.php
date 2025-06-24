@@ -57,10 +57,10 @@ class ServicesController extends Controller
 
         $services = $services->with(['serviceType','category']);
 
-        if($request->sort == '') {
-            $services = $services->orderBy('created_at','ASC');
-        } else {
-            $services = $services->orderBy('created_at','DESC');
+        if($request->sort == '0') {  
+            $services = $services->orderBy('created_at','ASC'); // Oldest first  
+        } else {  
+            $services = $services->orderBy('created_at','DESC'); // Latest first (default)  
         }
         
         
@@ -158,14 +158,8 @@ class ServicesController extends Controller
 
 
         
-        $message = 'You have successfully applied.';
 
-        session()->flash('success', $message);
         
-        return response()->json([
-                'status' => true,
-                'message' => $message
-            ]);
         //Send Notification Email to Employer
         $employer = User::where('id',$employer_id)->first();
             
@@ -173,10 +167,15 @@ class ServicesController extends Controller
             'employer' => $employer,
             'user' => Auth::user(),
             'service' => $service,
-
         ];
         Mail::to($employer->email)->send(new ServiceNotificationEmail($mailData));
-
+        
+        $message = 'You have successfully applied.';
+        session()->flash('success', $message);
+        return response()->json([
+            'status' => true,
+            'message' => $message
+        ]);
     }
 
     public function saveService(Request $request) {

@@ -9,6 +9,7 @@
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route("admin.dashboard") }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route("admin.users") }}">Users</a></li>
+                        <li class="breadcrumb-item"><a href="">{{ $user->name }}</a></li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </nav>
@@ -25,7 +26,7 @@
                     <div class="card-body card-form">
                         <form action="" method="post" id="userForm" name="userForm">
                             <div class="card-body  p-4">
-                                <h3 class="fs-4 mb-1">User / Edit</h3>
+                                <h3 class="fs-4 mb-1">{{ $user->name }} / Edit</h3>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Name*</label>
                                     <input type="text" name="name" id="name" placeholder="Enter Name" class="form-control" value="{{ $user->name }}">

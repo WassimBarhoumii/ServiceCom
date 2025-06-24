@@ -64,8 +64,14 @@
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" href="{{ route('admin.services.edit',$service->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" onclick="deleteService({{ $service->id }})" href="javascript:void(0);><i class="fa fa-trash aria-hidden="true"></i> Delete</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ route('admin.services.edit',$service->id) }}">
+                                                                <i class="fa fa-edit" aria-hidden="true">
+                                                                </i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" onclick="deleteService({{ $service->id }})" href="javascript:void(0)";><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </td>

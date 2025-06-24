@@ -68,7 +68,7 @@ class AccountController extends Controller
         return view('front.account.login');
 
     }
-
+    //this method will authenticate a user
     public function authenticate(Request $request){
 
         $validator = Validator::make($request->all(),[
@@ -78,7 +78,7 @@ class AccountController extends Controller
 
         if ($validator->passes()) {
 
-            if(Auth::attempt(['email' => $request, 'password' => $request->password])) {
+            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 return redirect()->route('account.profile');
             } else {
                 return redirect()-> route('account.login')->with('error','Either Email Or Password is incorrect');
@@ -90,6 +90,7 @@ class AccountController extends Controller
         }
     }
 
+    //this method will show the user profile page
     public function profile() {
 
         $id = Auth::user()->id;
@@ -101,6 +102,7 @@ class AccountController extends Controller
         ]); 
     }
 
+    //this method will update the user profile
     public function updateProfile(Request $request) {
         
         $id = Auth::user()->id;
@@ -133,11 +135,13 @@ class AccountController extends Controller
         }
     }
 
+    //this method will logout a user
     public function logout() {
         Auth::logout();
         return redirect()->route('account.login');
     }
 
+    //this method will update the profile picture
     public function updateProfilePic(Request $request) {
         //dd($request->all());
         $id = Auth::user()->id;
@@ -183,6 +187,7 @@ class AccountController extends Controller
          }
     }
 
+    //this method will show the create service page
     public function createService() {
 
         $categories = Category::orderBy('name','ASC')->where('status',1)->get();
@@ -196,6 +201,7 @@ class AccountController extends Controller
         ]);
     }
 
+    //this method will save a service
     public function saveService(Request $request) {
         $rules = [
             'title' => 'required|min:5|max:100',
@@ -243,6 +249,7 @@ class AccountController extends Controller
         }
     }
 
+    //this method will show the user's services
     public function myServices() {
         $services = Service::where('user_id', Auth::user()->id)->with('serviceType')->paginate(10);
         return view('front.account.service.my-services',[
@@ -250,15 +257,18 @@ class AccountController extends Controller
         ]);
     }
 
+    //this method will show the edit service page
     public function editService(Request $request, $id) {
         
         $categories = Category::orderBy('name','ASC')->where('status',1)->get();
         $serviceTypes = ServiceType::orderBy('name','ASC')->where('status',1)->get();
 
+        // Check if the service belongs to the authenticated user
         $service = Service::where([
             'user_id' => Auth::user()->id,
             'id' => $id
         ]) -> first();
+
 
         if ($service == null) {
             abort(404);
@@ -272,6 +282,7 @@ class AccountController extends Controller
         ]);
     }
 
+    //this method will update a service
     public function updateService(Request $request, $id) {
         $rules = [
             'title' => 'required|min:5|max:100',
